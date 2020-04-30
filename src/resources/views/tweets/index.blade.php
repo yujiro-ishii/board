@@ -3,68 +3,16 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 mb-3">
-            <div class="card">
-                <div class="d-inline-flex">
-                    <div class="p-3 d-flex flex-column">
-                        <img src="{{ resolveProfileImage($user) }}" class="rounded-circle" width="100" height="100">
-                        <div class="mt-3 d-flex flex-column">
-                            <h4 class="mb-0 font-weight-bold">{{ $user->name }}</h4>
-                            <span class="text-secondary">{{ $user->screen_name }}</span>
-                        </div>
-                    </div>
-                    <div class="p-3 d-flex flex-column justify-content-between">
-                        <div class="d-flex">
-                            <div>
-                                @if ($user->id === Auth::user()->id)
-                                    <a href="{{ url('users/' .$user->id .'/edit') }}" class="btn btn-primary">プロフィールを編集する</a>
-                                @else
-                                    @if ($is_following)
-                                        <form action="{{ route('unfollow', ['user' => $user->id]) }}" method="POST">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-
-                                            <button type="submit" class="btn btn-danger">フォロー解除</button>
-                                        </form>
-                                    @else
-                                        <form action="{{ route('follow', ['user' => $user->id]) }}" method="POST">
-                                            {{ csrf_field() }}
-
-                                            <button type="submit" class="btn btn-primary">フォローする</button>
-                                        </form>
-                                    @endif
-
-                                    @if ($is_followed)
-                                        <span class="mt-2 px-1 bg-secondary text-light">フォローされています</span>
-                                    @endif
-                                @endif
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <div class="p-2 d-flex flex-column align-items-center">
-                                <p class="font-weight-bold">ツイート数</p>
-                                <span>{{ $tweet_count }}</span>
-                            </div>
-                            <div class="p-2 d-flex flex-column align-items-center">
-                                <p class="font-weight-bold">フォロー数</p>
-                                <span>{{ $follow_count }}</span>
-                            </div>
-                            <div class="p-2 d-flex flex-column align-items-center">
-                                <p class="font-weight-bold">フォロワー数</p>
-                                <span>{{ $follower_count }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-8 mb-3 text-right">
+            <a href="{{ url('users') }}">ユーザ一覧 <i class="fas fa-users" class="fa-fw"></i> </a>
         </div>
         @if (isset($timelines))
             @foreach ($timelines as $timeline)
                 <div class="col-md-8 mb-3">
                     <div class="card">
                         <div class="card-haeder p-3 w-100 d-flex">
-                            <img src="{{ resolveProfileImage($user) }}" class="rounded-circle" width="50" height="50">
-                            <div class="ml-2 d-flex flex-column flex-grow-1">
+                            <img src="{{ asset('storage/profile_image/' .$timeline->user->profile_image) }}" class="rounded-circle" width="50" height="50">
+                            <div class="ml-2 d-flex flex-column">
                                 <p class="mb-0">{{ $timeline->user->name }}</p>
                                 <a href="{{ url('users/' .$timeline->user->id) }}" class="text-secondary">{{ $timeline->user->screen_name }}</a>
                             </div>
@@ -73,7 +21,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            {{ $timeline->text }}
+                            {!! nl2br(e($timeline->text)) !!}
                         </div>
                         <div class="card-footer py-1 d-flex justify-content-end bg-white">
                             @if ($timeline->user->id === Auth::user()->id)
@@ -98,7 +46,7 @@
                                 <p class="mb-0 text-secondary">{{ count($timeline->comments) }}</p>
                             </div>
                             <div class="d-flex align-items-center">
-                                @if (!in_array(Auth::user()->id, array_column($timeline->favorites->toArray(), 'user_id'), TRUE))
+                                @if (!in_array($user->id, array_column($timeline->favorites->toArray(), 'user_id'), TRUE))
                                     <form method="POST" action="{{ url('favorites/') }}" class="mb-0">
                                         @csrf
 
@@ -106,7 +54,7 @@
                                         <button type="submit" class="btn p-0 border-0 text-primary"><i class="far fa-heart fa-fw"></i></button>
                                     </form>
                                 @else
-                                    <form method="POST"action="{{ url('favorites/' .array_column($timeline->favorites->toArray(), 'id', 'user_id')[Auth::user()->id]) }}" class="mb-0">
+                                    <form method="POST" action="{{ url('favorites/' .array_column($timeline->favorites->toArray(), 'id', 'user_id')[$user->id]) }}" class="mb-0">
                                         @csrf
                                         @method('DELETE')
 
