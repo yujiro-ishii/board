@@ -62,7 +62,6 @@ class UsersController extends Controller
         return redirect('users/'.$user->id);
     }
 
-
     public function follow(User $user)
     {
         $follower = auth()->user();
