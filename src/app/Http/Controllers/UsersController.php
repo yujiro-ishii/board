@@ -47,7 +47,6 @@ class UsersController extends Controller
         return view('users.edit', ['user' => $user]);
     }
 
-
     public function update(Request $request, User $user)
     {
         $data = $request->all();
