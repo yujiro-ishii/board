@@ -9,8 +9,6 @@ use App\Models\User;
 use App\Models\Tweet;
 use App\Models\Follower;
 
-
-
 class UsersController extends Controller
 {
 
@@ -22,7 +20,6 @@ class UsersController extends Controller
             'all_users'  => $all_users
         ]);
     }
-
 
     public function show(User $user, Tweet $tweet, Follower $follower)
     {
@@ -45,12 +42,10 @@ class UsersController extends Controller
         ]);
     }
 
-
     public function edit(User $user)
     {
         return view('users.edit', ['user' => $user]);
     }
-
 
     public function update(Request $request, User $user)
     {
@@ -66,7 +61,6 @@ class UsersController extends Controller
 
         return redirect('users/'.$user->id);
     }
-
 
     public function follow(User $user)
     {
@@ -92,7 +86,4 @@ class UsersController extends Controller
             return back();
         }
     }
-
-
-
 }
