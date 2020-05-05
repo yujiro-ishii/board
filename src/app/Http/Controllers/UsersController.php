@@ -87,7 +87,4 @@ class UsersController extends Controller
             return back();
         }
     }
-
-
-
 }
