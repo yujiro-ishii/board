@@ -101,7 +101,4 @@ class User extends Authenticatable
 
         return;
     }
-
-
-
 }
