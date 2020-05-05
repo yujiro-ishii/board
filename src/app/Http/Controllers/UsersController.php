@@ -23,7 +23,6 @@ class UsersController extends Controller
         ]);
     }
 
-
     public function show(User $user, Tweet $tweet, Follower $follower)
     {
         $login_user = auth()->user();
