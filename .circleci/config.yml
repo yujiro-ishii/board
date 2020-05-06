@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout #Gitリポジトリの内容を取得する
+      - setup_remote_docker
+      - run: docker build --build-arg TZ=Asia/Tokyo -t board docker/php
+
