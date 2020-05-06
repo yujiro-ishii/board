@@ -5,6 +5,8 @@ services:
       context: ./docker/php
       args:
         - TZ=Asia/Tokyo
+    ports:
+      - 10080:80
     volumes:
       - ./src:/work
       - ./logs:/var/log/php
@@ -19,19 +21,6 @@ services:
       - TZ=Asia/Tokyo
     depends_on:
       - db
-  web:
-    image: nginx:1.17-alpine
-    depends_on:
-      - app
-    ports:
-      - 10080:80
-    volumes:
-      - ./src:/work
-      - ./src/storage/app/public:/work/public/storage
-      - ./logs:/var/log/nginx
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    environment:
-      - TZ=Asia/Tokyo
   db:
     image: mysql:8.0
     ports:

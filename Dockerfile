@@ -17,3 +17,5 @@ RUN cd src && composer install --no-autoloader
 
 COPY . /opt/board
 RUN cd src && composer dump-autoload
+RUN mv src/public/* /var/www/html/ && \
+    mv src/vendor /var/www/
