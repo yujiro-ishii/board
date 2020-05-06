@@ -6,5 +6,5 @@ jobs:
     steps:
       - checkout #Gitリポジトリの内容を取得する
       - setup_remote_docker
-      - run: docker build -t board docker/php
+      - run: docker build --build-arg TZ=Asia/Tokyo -t board docker/php
 
