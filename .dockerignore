@@ -1,0 +1,17 @@
+.git
+docker
+logs
+
+.dockerignore
+.editorconfig
+.env
+.gitignore
+docker-compose.yml
+Dockerfile
+README.md
+
+# special
+src/node_modules
+src/package-lock.json
+src/package.json
+src/vendor
