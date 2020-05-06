@@ -14,4 +14,5 @@ README.md
 src/node_modules
 src/package-lock.json
 src/package.json
+src/storage/app
 src/vendor

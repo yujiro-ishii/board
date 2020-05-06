@@ -11,11 +11,10 @@ RUN apt-get update && \
 # RUN composer global require hirak/prestissimo
 
 WORKDIR /opt/board
-COPY src/composer.json /opt/board/src/
-COPY src/composer.lock /opt/board/src/
-RUN cd src && composer install --no-autoloader
+COPY src/composer.json /opt/board/
+COPY src/composer.lock /opt/board/
+RUN composer install --no-autoloader
 
-COPY . /opt/board
-RUN cd src && composer dump-autoload
-RUN mv src/public/* /var/www/html/ && \
-    mv src/vendor /var/www/
+COPY src /opt/board/
+RUN composer dump-autoload
+RUN mv public/* /var/www/html/
