@@ -17,4 +17,5 @@ RUN composer install --no-autoloader
 
 COPY src /opt/board/
 RUN composer dump-autoload
+RUN chown -R www-data storage/
 RUN mv public/* /var/www/html/
