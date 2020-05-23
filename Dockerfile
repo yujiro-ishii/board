@@ -10,15 +10,16 @@ RUN apt-get update && \
     composer config -g repos.packagist composer https://packagist.jp
 # RUN composer global require hirak/prestissimo
 
+RUN a2enmod rewrite
+
 WORKDIR /var/www
 COPY src/composer.json /var/www/
 COPY src/composer.lock /var/www/
 RUN composer install --no-autoloader
 
 COPY src /var/www/
+RUN ln -s /var/www/storage/app/public/ /var/www/html/storage
 RUN composer dump-autoload
 RUN chown -R www-data storage/
 RUN mv public/* public/.htaccess  /var/www/html/
 RUN cp .env.example .env && php artisan key:generate
-
-COPY docker/apache/apache2.conf /etc/apache2/
