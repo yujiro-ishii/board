@@ -20,3 +20,5 @@ RUN composer dump-autoload
 RUN chown -R www-data storage/
 RUN mv public/* public/.htaccess  /var/www/html/
 RUN cp .env.example .env && php artisan key:generate
+
+COPY docker/apache/apache2.conf /etc/apache2/
