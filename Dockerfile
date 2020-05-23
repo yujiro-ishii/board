@@ -10,12 +10,12 @@ RUN apt-get update && \
     composer config -g repos.packagist composer https://packagist.jp
 # RUN composer global require hirak/prestissimo
 
-WORKDIR /opt/board
-COPY src/composer.json /opt/board/
-COPY src/composer.lock /opt/board/
+WORKDIR /var/www
+COPY src/composer.json /var/www/
+COPY src/composer.lock /var/www/
 RUN composer install --no-autoloader
 
-COPY src /opt/board/
+COPY src /var/www/
 RUN composer dump-autoload
 RUN chown -R www-data storage/
 RUN mv public/* public/.htaccess  /var/www/html/
