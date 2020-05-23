@@ -1,14 +1,15 @@
 version: "3"
 services:
   app:
-    build:
-      context: ./docker/php
-      args:
-        - TZ=Asia/Tokyo
+    image: board:bard
+    # build:
+    #   context: ./docker/php
+    #   args:
+    #     - TZ=Asia/Tokyo
     ports:
       - 10080:80
     volumes:
-      - ./src:/work
+    #   - ./src:/work
       - ./logs:/var/log/php
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
     environment:

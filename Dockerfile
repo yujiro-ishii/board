@@ -18,4 +18,5 @@ RUN composer install --no-autoloader
 COPY src /opt/board/
 RUN composer dump-autoload
 RUN chown -R www-data storage/
-RUN mv public/* /var/www/html/
+RUN mv public/* public/.htaccess  /var/www/html/
+RUN cp .env.example .env && php artisan key:generate
